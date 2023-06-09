@@ -1,1 +1,1 @@
-# unstoppable paystring
+# The identity registry

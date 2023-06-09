@@ -24,10 +24,22 @@ export default class PaystringActor {
     return Actor.createActor(idlFactory, { agent, canisterId: paystringCanisterId }) as _SERVICE;
   }
 
+  async getPriceByPaystring(paystring: string) {
+    const payId = parsePayString(paystring);
+    const { user } = splitPayString(payId);
+    return await this.actor.getPrice(user);
+  }
+
+  async payStringExist(paystring: string) {
+    const payId = parsePayString(paystring);
+    const { user } = splitPayString(payId);
+    return await this.actor.payStringExist(user);
+  }
+
   async create(paystring: string, addresses: Address[]) {
     try {
       const payId = parsePayString(paystring);
-      const { user } = splitPayString(paystring);
+      const { user } = splitPayString(payId);
       const exists = await this.actor.payStringExist(user);
       if (exists) {
         Promise.reject('Paystring already exists');

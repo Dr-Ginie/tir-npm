@@ -1,6 +1,6 @@
 {
   "name": "the-identity-registry",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Paystring integration on the internet computer",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

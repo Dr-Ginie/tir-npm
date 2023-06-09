@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dr-Ginie/the-identity-registry.git"
+    "url": "git+https://github.com/Dr-Ginie/tir-npm.git"
   },
   "keywords": [
     "internet computer",
@@ -34,9 +34,9 @@
   "author": "rem.codes",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Dr-Ginie/the-identity-registry/issues"
+    "url": "https://github.com/Dr-Ginie/tir-npm/issues"
   },
-  "homepage": "https://github.com/Dr-Ginie/the-identity-registry#readme",
+  "homepage": "https://github.com/Dr-Ginie/tir-npm#readme",
   "devDependencies": {
     "@babel/preset-typescript": "^7.21.5",
     "@jest/globals": "^29.5.0",

@@ -1,10 +1,10 @@
 import { Actor, HttpAgent, Identity } from '@dfinity/agent';
-import { _SERVICE, idlFactory } from './wicp_ledger.declaration';
+import { TxError, _SERVICE, idlFactory } from './wicp_ledger.declaration';
 import { unwrapResult } from '../helpers/canister.helpers';
 import { Principal } from '@dfinity/principal';
 import { paystringCanisterId } from '../paystring/paystring.actor';
 
-export const wicpCanisterid = 'utozz-siaaa-aaaam-qaaxq-cai';
+export const wicpCanisterId = 'utozz-siaaa-aaaam-qaaxq-cai';
 export const mainnetHost = 'https://icp0.io';
 
 export default class WicpLedgerActor {
@@ -16,7 +16,7 @@ export default class WicpLedgerActor {
 
   private createActor(identity: Identity | Promise<Identity>, host?: string) {
     const agent = new HttpAgent({ host, identity });
-    return Actor.createActor(idlFactory, { agent, canisterId: wicpCanisterid }) as _SERVICE;
+    return Actor.createActor(idlFactory, { agent, canisterId: wicpCanisterId }) as _SERVICE;
   }
 
   async mint(blockheight: bigint) {

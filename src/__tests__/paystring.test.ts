@@ -6,5 +6,4 @@ test('get data', async () => {
   // const actor = new PaystringActor(new AnonymousIdentity());
   // const price = await actor.getPaystringPrice();
   // const result = await getPaystringData('remcos$spaceturtle.app', { chain: 'mainnet' });
-  // console.log(price);
 });

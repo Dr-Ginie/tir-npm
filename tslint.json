@@ -5,7 +5,12 @@
     ],
     "linterOptions": {
         "exclude": [
-            "src/ic/definitions/*"
+            "src/canister/icp_ledger/icp_ledger.declaration.ts",
+            "src/canister/wicp_ledger/wicp_ledger.declaration.ts",
+            "src/canister/paystring/paystring.declaration.ts"
         ]
+    },
+    "rules": {
+        "no-console": false
     }
 }

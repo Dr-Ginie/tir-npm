@@ -2,8 +2,8 @@ import { Actor, HttpAgent, Identity } from '@dfinity/agent';
 import { Address, _SERVICE, idlFactory } from './paystring.declaration';
 import { parsePayString } from '../../methods/paystring.parse';
 import IcpLedgerActor from '../icp_ledger/icp_ledger.actor';
-import WicpLedgerActor from '../wicp/wicp_ledger.actor';
 import { splitPayString } from '../../methods/paystring.misc';
+import WicpLedgerActor from '../wicp/wicp_ledger.actor';
 
 export const paystringCanisterId = 'qbu4y-iaaaa-aaaan-qdvda-cai';
 export const mainnetHost = 'https://icp0.io';

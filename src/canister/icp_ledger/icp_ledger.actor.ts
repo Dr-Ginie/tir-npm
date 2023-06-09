@@ -2,7 +2,7 @@ import { Actor, HttpAgent, Identity } from '@dfinity/agent';
 import { Tokens, TransferArg, _SERVICE, idlFactory } from './icp_ledger.declaration';
 import { unwrapResult } from '../helpers/canister.helpers';
 import { Principal } from '@dfinity/principal';
-import { wicpCanisterId } from '../wicp/wicp_ledger.actor';
+import { wicpCanisterId } from '../wicp_ledger/wicp_ledger.actor';
 
 export const icpCanisterid = 'ryjl3-tyaaa-aaaaa-aaaba-cai';
 export const mainnetHost = 'https://icp0.io';

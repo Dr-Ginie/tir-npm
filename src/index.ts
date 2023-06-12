@@ -1,7 +1,8 @@
 import PaystringActor from './canister/paystring/paystring.actor';
-import { getPaystringData } from './methods/paystring.http';
+import { getPaystringData, getPaystringDataDebounced } from './methods/paystring.http';
 
 export default {
   getPaystringData,
+  getPaystringDataDebounced,
   PaystringActor,
 };

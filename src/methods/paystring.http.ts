@@ -23,7 +23,6 @@ export async function getPayStringAsync(payString: string, options?: { chain?: s
       headers: {
         contentType: 'application/json',
         Accept: `application/${acceptChain}${acceptEnvironment}+json`,
-        'PayID-Version': '1.0',
       },
     });
 

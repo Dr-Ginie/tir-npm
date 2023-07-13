@@ -14,9 +14,9 @@ Fetch a PayString async
 
 ```ts
 // the PayString argument supports;
-//  - full paystrings (`chris$domain.io`)
+//  - full paystrings (`chris$identity-registry-redirected-domain.io`)
 //  - PayString suffix ('chris')
-// The suffix method will default to the PayString canister
+// The suffix method will default to the identity registry PayString domain
 getPayStringAsync(
     payString: string,
     options?: {

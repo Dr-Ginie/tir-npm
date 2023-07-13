@@ -7,14 +7,14 @@ import { parsePayString } from './paystring.parse';
 
 const minDebounceTime = 300;
 
-export async function getPayStringAsync(PayString: string, options?: { chain?: string; environment?: string }) {
+export async function getPayStringAsync(payString: string, options?: { chain?: string; environment?: string }) {
   try {
     try {
-      PayString = parsePayString(PayString);
+      payString = parsePayString(payString);
     } catch (error) {
-      PayString = `${PayString}$${domain}`;
+      payString = `${payString}$${domain}`;
     }
-    const url = convertPayStringToUrl(PayString).toString();
+    const url = convertPayStringToUrl(payString).toString();
 
     const acceptChain = options?.chain ? options.chain : 'payid';
     const acceptEnvironment = options?.environment ? `-${options.environment}` : '';
@@ -38,7 +38,7 @@ let debounceSearchFunction: ((() => void) & { clear(): void }) | null = null;
 
 export function getPayStringDebounce(
   callback: (data: PaymentInformation | undefined) => void,
-  PayString: string,
+  payString: string,
   debounceTime = minDebounceTime,
 ) {
   if (debounceTime < minDebounceTime) {
@@ -50,18 +50,18 @@ export function getPayStringDebounce(
   }
 
   try {
-    PayString = parsePayString(PayString);
+    payString = parsePayString(payString);
   } catch (error) {
-    PayString = `${PayString}$${domain}`;
+    payString = `${payString}$${domain}`;
   }
 
-  if (pastSearchQuery !== PayString) {
+  if (pastSearchQuery !== payString) {
     debounceSearchFunction = debounce(() => {
-      getPayStringAsync(PayString).then(callback);
+      getPayStringAsync(payString).then(callback);
       debounceSearchFunction = null;
     }, debounceTime);
 
-    pastSearchQuery = PayString;
+    pastSearchQuery = payString;
     debounceSearchFunction();
   }
 }

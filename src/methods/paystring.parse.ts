@@ -1,18 +1,18 @@
 import { splitPayString } from './paystring.misc';
 
-export function parsePayString(input: string): string {
-  const { prefix: user, domain: host } = splitPayString(input);
+export function parsePayString(payString: string): string {
+  const { prefix: user, domain: host } = splitPayString(payString);
 
   if (user.includes('/') || host.includes('/')) {
     throw new Error('A PayString string representation cannot include paths.');
   }
 
   parsePayStringUrl(`https://${host}/${user}`);
-  return input.toLowerCase();
+  return payString.toLowerCase();
 }
 
-export function parsePayStringUrl(input: string): URL {
-  const url = new URL(input);
+export function parsePayStringUrl(payStringUrl: string): URL {
+  const url = new URL(payStringUrl);
 
   if (url.protocol !== 'http:' && url.protocol !== 'https:') {
     throw new Error(`Invalid URL protocol: "${url.protocol}". PayString URLs must be HTTP/HTTPS.`);

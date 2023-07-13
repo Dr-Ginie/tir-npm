@@ -44,7 +44,7 @@ getPayStringDebounce(
 Parse a PayString, throws an error if not parseable by protocol standards
 
 ```ts
-parsePayString(payString: string): void
+parsePayString(payString: string): string
 
 ```
 

@@ -1,6 +1,6 @@
 {
   "name": "@the-registry/tir",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "PayString integration on the internet computer",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,7 +29,12 @@
     "PayString",
     "canister",
     "IC",
-    "ICP"
+    "ICP",
+    "identity",
+    "registry",
+    "decentralized",
+    "defi",
+    "trustless"
   ],
   "author": "The registry",
   "license": "ISC",

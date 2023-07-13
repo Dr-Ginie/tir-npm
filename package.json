@@ -1,7 +1,7 @@
 {
-  "name": "the-identity-registry",
-  "version": "1.0.4",
-  "description": "Paystring integration on the internet computer",
+  "name": "@the-registry/tir",
+  "version": "1.0.3",
+  "description": "PayString integration on the internet computer",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -26,12 +26,12 @@
     "ethereum",
     "btc",
     "bitcoin",
-    "paystring",
+    "PayString",
     "canister",
     "IC",
     "ICP"
   ],
-  "author": "rem.codes",
+  "author": "The registry",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Dr-Ginie/tir-npm/issues"
@@ -52,8 +52,6 @@
     "lib/**/*"
   ],
   "dependencies": {
-    "@dfinity/agent": "^0.15.6",
-    "@dfinity/principal": "^0.15.6",
     "@types/debounce": "^1.2.1",
     "axios": "^1.4.0",
     "debounce": "^1.2.1"

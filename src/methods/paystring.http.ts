@@ -2,14 +2,19 @@ import axios from 'axios';
 import { convertPayStringToUrl } from './paystring.convert';
 import { PaymentInformation } from './paystring.interfaces';
 import debounce from 'debounce';
-import { parsePayStringUrl } from './paystring.parse';
-import { paystringCanisterId } from '../canister/paystring/paystring.actor';
+import { domain } from '..';
+import { parsePayString } from './paystring.parse';
 
 const minDebounceTime = 300;
 
-export async function getPaystringData(paystring: string, options?: { chain?: string; environment?: string }) {
+export async function getPayStringAsync(PayString: string, options?: { chain?: string; environment?: string }) {
   try {
-    const url = convertPayStringToUrl(paystring).toString();
+    try {
+      PayString = parsePayString(PayString);
+    } catch (error) {
+      PayString = `${PayString}$${domain}`;
+    }
+    const url = convertPayStringToUrl(PayString).toString();
 
     const acceptChain = options?.chain ? options.chain : 'payid';
     const acceptEnvironment = options?.environment ? `-${options.environment}` : '';
@@ -31,14 +36,11 @@ export async function getPaystringData(paystring: string, options?: { chain?: st
 let pastSearchQuery: string | undefined;
 let debounceSearchFunction: ((() => void) & { clear(): void }) | null = null;
 
-export function getPaystringDataDebounced(
+export function getPayStringDebounce(
   callback: (data: PaymentInformation | undefined) => void,
-  query: string,
-  domain = `https://${paystringCanisterId}.raw.icp0.io/`,
+  PayString: string,
   debounceTime = minDebounceTime,
 ) {
-  const url = parsePayStringUrl(domain);
-
   if (debounceTime < minDebounceTime) {
     debounceTime = minDebounceTime;
   }
@@ -47,13 +49,19 @@ export function getPaystringDataDebounced(
     debounceSearchFunction.clear();
   }
 
-  if (pastSearchQuery !== query) {
+  try {
+    PayString = parsePayString(PayString);
+  } catch (error) {
+    PayString = `${PayString}$${domain}`;
+  }
+
+  if (pastSearchQuery !== PayString) {
     debounceSearchFunction = debounce(() => {
-      getPaystringData(`${query}$${url.hostname}`).then(callback);
+      getPayStringAsync(PayString).then(callback);
       debounceSearchFunction = null;
     }, debounceTime);
 
-    pastSearchQuery = query;
+    pastSearchQuery = PayString;
     debounceSearchFunction();
   }
 }

@@ -1,7 +1,7 @@
 import { splitPayString } from './paystring.misc';
 
 export function parsePayString(input: string): string {
-  const { user, host } = splitPayString(input);
+  const { prefix: user, domain: host } = splitPayString(input);
 
   if (user.includes('/') || host.includes('/')) {
     throw new Error('A PayString string representation cannot include paths.');

@@ -1,19 +1,19 @@
 import { splitPayString } from './paystring.misc';
 import { parsePayString, parsePayStringUrl } from './paystring.parse';
 
-export function convertPayStringToUrl(potentialPayString: string): URL {
-  const payString = parsePayString(potentialPayString);
+export function convertPayStringToUrl(payString: string): URL {
+  payString = parsePayString(payString);
 
-  const { user, host } = splitPayString(payString);
+  const { prefix, domain } = splitPayString(payString);
 
-  return parsePayStringUrl(`https://${host}/${user}`);
+  return parsePayStringUrl(`https://${domain}/${prefix}`);
 }
 
-export function convertUrlToPayString(potentialPayStringUrl: string): string {
-  const payStringUrl = parsePayStringUrl(potentialPayStringUrl);
+export function convertUrlToPayString(payStringUrl: string): string {
+  const domain = parsePayStringUrl(payStringUrl);
 
-  const user = payStringUrl.pathname.slice(1);
-  const payString = `${user}$${payStringUrl}`;
+  const prefix = domain.pathname.slice(1);
+  const payString = `${prefix}$${domain}`;
 
   return parsePayString(payString);
 }

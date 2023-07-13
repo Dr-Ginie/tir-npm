@@ -1,11 +1,11 @@
-export function splitPayString(payString: string): { user: string; host: string } {
+export function splitPayString(payString: string): { prefix: string; domain: string } {
   const lastDollarIndex = payString.lastIndexOf('$');
-  const user = payString.slice(0, lastDollarIndex);
-  const host = payString.slice(lastDollarIndex + 1);
+  const prefix = payString.slice(0, lastDollarIndex);
+  const domain = payString.slice(lastDollarIndex + 1);
 
-  if (lastDollarIndex === -1 || user.length === 0 || host.length === 0) {
+  if (lastDollarIndex === -1 || prefix.length === 0 || domain.length === 0) {
     throw new Error('A PayString must have a user and a host, divided by a $ (e.g. alice$example.com).');
   }
 
-  return { user, host };
+  return { prefix, domain };
 }

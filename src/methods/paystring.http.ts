@@ -21,7 +21,6 @@ export async function getPayStringAsync(payString: string, options?: { chain?: s
 
     const result = await axios.get<PaymentInformation>(url, {
       headers: {
-        contentType: 'application/json',
         Accept: `application/${acceptChain}${acceptEnvironment}+json`,
       },
     });

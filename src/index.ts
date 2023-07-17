@@ -11,6 +11,6 @@ export { splitPayString } from './methods/paystring.misc';
 export { convertPayStringToUrl, convertUrlToPayString } from './methods/paystring.convert';
 
 export const canisterId = 'qbu4y-iaaaa-aaaan-qdvda-cai';
-export const domain = `${canisterId}.icp0.io`;
+export const domain = `${canisterId}.raw.icp0.io`;
 export const canisterUrl = `https://${domain}`;
 export const url = 'https://identityregistry.io';

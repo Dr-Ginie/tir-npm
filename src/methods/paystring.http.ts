@@ -38,6 +38,7 @@ let debounceSearchFunction: ((() => void) & { clear(): void }) | null = null;
 export function getPayStringDebounce(
   callback: (data: PaymentInformation | undefined) => void,
   payString: string,
+  options?: { chain?: string; environment?: string },
   debounceTime = minDebounceTime,
 ) {
   if (debounceTime < minDebounceTime) {
@@ -48,15 +49,9 @@ export function getPayStringDebounce(
     debounceSearchFunction.clear();
   }
 
-  try {
-    payString = parsePayString(payString);
-  } catch (error) {
-    payString = `${payString}$${domain}`;
-  }
-
   if (pastSearchQuery !== payString) {
     debounceSearchFunction = debounce(() => {
-      getPayStringAsync(payString).then(callback);
+      getPayStringAsync(payString, options).then(callback);
       debounceSearchFunction = null;
     }, debounceTime);
 

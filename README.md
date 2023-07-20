@@ -13,61 +13,51 @@ Website: https://identityregistry.io
 Fetch a PayString async
 
 ```ts
-// the PayString argument supports;
-//  - full paystrings (`chris$identity-registry-redirected-domain.io`)
-//  - PayString suffix ('chris')
-// The suffix method will default to the identity registry PayString domain
-getPayStringAsync(
-    payString: string,
-    options?: {
-        chain?: string;
-        environment?: string
-    }
-): Promise<PaymentInformation | undefined>
+// the PayString argument supports; chris$identity-registry-redirected-domain.io
+// options: see options interface
+async function getPayStringAsync(payString: string, options?: Options): Promise<PaymentInformation | undefined>;
 ```
 
 Fetch a PayString debounced, result gets returned in the callback
 
 ```ts
-// the PayString argument supports;
-//  - full paystrings (`chris$domain.io`)
-//  - PayString suffix ('chris')
-// The suffix method will default to the PayString canister
-getPayStringDebounce(
+// callback returns data with a delay
+// the PayString - ex; chris$identity-registry-redirected-domain.io
+// options: see options interface
+// debounce time - set custom time for debounced response (defaults to 300ms)
+function getPayStringDebounce(
   callback: (data: PaymentInformation | undefined) => void,
   payString: string,
+  options?: Options,
   debounceTime = minDebounceTime,
-): void
-
+): void;
 ```
 
 Parse a PayString, throws an error if not parseable by protocol standards
 
 ```ts
-parsePayString(payString: string): string
-
+function parsePayString(payString: string): string;
 ```
 
 Parse a PayString url, throws an error if not parseable by protocol standards
 
 ```ts
-parsePayStringUrl(payString: string): URL
-
+function parsePayStringUrl(payString: string): URL;
 ```
 
 Splits the PayString to return the prefix and domain, throws an error if not parseable by protocol standards
 
 ```ts
-splitPayString(payString: string): { prefix: string; domain: string }
+function splitPayString(payString: string): { prefix: string; domain: string };
 ```
 
 Converts the PayString to an URL
 
 ```ts
-convertPayStringToUrl(payString: string): URL
+function convertPayStringToUrl(payString: string): URL;
 ```
 
-Converts a PayString URL to a PayString
+function Converts a PayString URL to a PayString
 
 ```ts
 convertUrlToPayString(payStringUrl: string): string
@@ -110,5 +100,16 @@ interface Address {
   environment?: string;
   addressDetailsType: AddressDetailsType;
   addressDetails: CryptoAddressDetails | FiatAddressDetails;
+}
+```
+
+```ts
+// - chain: ex; icp
+// - network: ex; mainnet
+// - version: ex; 1.0 (paystring version)
+interface Options {
+  chain?: string;
+  environment?: string;
+  version?: string;
 }
 ```

@@ -5,7 +5,7 @@ export {
   CryptoAddressDetails,
   FiatAddressDetails,
 } from './methods/paystring.interfaces';
-export { getPayStringAsync, getPayStringDebounce } from './methods/paystring.http';
+export { getPayStringAsync, getPayStringDebounce, Options } from './methods/paystring.http';
 export { parsePayString, parsePayStringUrl } from './methods/paystring.parse';
 export { splitPayString } from './methods/paystring.misc';
 export { convertPayStringToUrl, convertUrlToPayString } from './methods/paystring.convert';

@@ -13,7 +13,7 @@ Website: https://identityregistry.io
 Fetch a PayString async
 
 ```ts
-// the PayString argument supports; chris$identity-registry-redirected-domain.io
+// the PayString - ex; chris$identity-registry-redirected-domain.io
 // options: see options interface
 async function getPayStringAsync(payString: string, options?: Options): Promise<PaymentInformation | undefined>;
 ```

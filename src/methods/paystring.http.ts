@@ -5,7 +5,7 @@ import debounce from 'debounce';
 import { domain } from '..';
 import { parsePayString } from './paystring.parse';
 
-interface Options {
+export interface Options {
   chain?: string;
   environment?: string;
   version?: string;

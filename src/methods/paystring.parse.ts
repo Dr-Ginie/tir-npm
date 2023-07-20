@@ -1,26 +1,27 @@
 import { splitPayString } from './paystring.misc';
 
-export function parsePayString(payString: string): string {
-  const { prefix: user, domain: host } = splitPayString(payString);
+export function parsePayString(payString: string): string | undefined {
+  const _split = splitPayString(payString);
 
-  if (user.includes('/') || host.includes('/')) {
-    throw new Error('A PayString string representation cannot include paths.');
-  }
+  if (!_split) return;
+
+  const { prefix: user, domain: host } = _split;
+
+  // A PayString string representation cannot include paths
+  if (user.includes('/') || host.includes('/')) return;
 
   parsePayStringUrl(`https://${host}/${user}`);
   return payString.toLowerCase();
 }
 
-export function parsePayStringUrl(payStringUrl: string): URL {
+export function parsePayStringUrl(payStringUrl: string): URL | undefined {
   const url = new URL(payStringUrl);
 
-  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
-    throw new Error(`Invalid URL protocol: "${url.protocol}". PayString URLs must be HTTP/HTTPS.`);
-  }
+  // Invalid URL protocol: "${url.protocol}". PayString URLs must be HTTP/HTTPS.
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
 
-  if (!url.hostname.includes('.')) {
-    throw new Error(`Hostname "${url.hostname}" is not a valid hostname. Needs a dot-separated TLD.`);
-  }
+  // Hostname "${url.hostname}" is not a valid hostname. Needs a dot-separated TLD
+  if (!url.hostname.includes('.')) return;
 
   return url;
 }

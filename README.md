@@ -33,34 +33,34 @@ function getPayStringDebounce(
 ): void;
 ```
 
-Parse a PayString, throws an error if not parseable by protocol standards
+Parse a PayString, return undefined if not parseable by protocol standards
 
 ```ts
-function parsePayString(payString: string): string;
+function parsePayString(payString: string): string | undefined;
 ```
 
-Parse a PayString url, throws an error if not parseable by protocol standards
+Parse a PayString url, return undefined if not parseable by protocol standards
 
 ```ts
-function parsePayStringUrl(payString: string): URL;
+function parsePayStringUrl(payString: string): URL | undefined;
 ```
 
-Splits the PayString to return the prefix and domain, throws an error if not parseable by protocol standards
+Splits the PayString to return the prefix and domain, return undefined if not parseable by protocol standards
 
 ```ts
-function splitPayString(payString: string): { prefix: string; domain: string };
+function splitPayString(payString: string): { prefix: string; domain: string } | undefined;
 ```
 
-Converts the PayString to an URL
+Converts the PayString to an URL, return undefined if not parseable by protocol standards
 
 ```ts
-function convertPayStringToUrl(payString: string): URL;
+function convertPayStringToUrl(payString: string): URL | undefined;
 ```
 
-function Converts a PayString URL to a PayString
+function Converts a PayString URL to a PayString, return undefined if not parseable by protocol standards
 
 ```ts
-convertUrlToPayString(payStringUrl: string): string
+convertUrlToPayString(payStringUrl: string): string | undefined
 ```
 
 ### Interfaces

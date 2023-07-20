@@ -15,8 +15,11 @@ const minDebounceTime = 300;
 
 export async function getPayStringAsync(payString: string, options?: Options) {
   try {
-    const parsedPayString = parsePayString(payString);
-    const url = convertPayStringToUrl(parsedPayString).toString();
+    const _parsed = parsePayString(payString);
+    if (!_parsed) return;
+
+    const _converted = convertPayStringToUrl(_parsed);
+    if (!_converted) return;
 
     const acceptChain = options?.chain ? options.chain : 'payid';
     const acceptEnvironment = options?.environment ? `-${options.environment}` : '';
@@ -33,7 +36,7 @@ export async function getPayStringAsync(payString: string, options?: Options) {
       };
     }
 
-    const result = await axios.get<PaymentInformation>(url, {
+    const result = await axios.get<PaymentInformation>(_converted.toString(), {
       headers,
     });
 

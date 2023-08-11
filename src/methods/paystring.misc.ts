@@ -8,3 +8,12 @@ export function splitPayString(payString: string): { prefix: string; domain: str
 
   return { prefix, domain };
 }
+
+export function isValidPrefix(prefix: string): boolean {
+  const urlSafePattern = /^[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=]*$/;
+  if (!urlSafePattern.test(prefix)) {
+    return false;
+  }
+
+  return true;
+}

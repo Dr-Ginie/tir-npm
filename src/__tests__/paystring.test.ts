@@ -1,13 +1,13 @@
 import { getPayStringAsync, getPayStringDebounce } from '../methods/paystring.http';
 
 test('getPayStringAsyncFull', async () => {
-  const x = await getPayStringAsync('rem.codes$spaceturtle.app');
+  const x = await getPayStringAsync('rem.codes', 'spaceturtle.app');
   console.log(x);
   expect(1).toBe(1);
 });
 
 test('getPayStringAsyncPartial', async () => {
-  const x = await getPayStringAsync('rem.codes');
+  const x = await getPayStringAsync('rem.codes', 'spaceturtle.app');
   console.log(x);
   expect(1).toBe(1);
 });

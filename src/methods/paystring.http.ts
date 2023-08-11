@@ -1,9 +1,9 @@
-import axios, { AxiosHeaders, RawAxiosRequestHeaders } from 'axios';
+import axios, { RawAxiosRequestHeaders } from 'axios';
 import { convertPayStringToUrl } from './paystring.convert';
 import { PaymentInformation } from './paystring.interfaces';
 import debounce from 'debounce';
-import { domain } from '..';
 import { parsePayString } from './paystring.parse';
+import { isValidPrefix } from './paystring.misc';
 
 export interface Options {
   chain?: string;
@@ -13,8 +13,27 @@ export interface Options {
 
 const minDebounceTime = 300;
 
-export async function getPayStringAsync(payString: string, options?: Options) {
+/**
+ * Find a PayString and return the payment information.
+ * @param prefix The part before the "$" for the PayString.
+ * @param domain The domain to use for fetching the PayString.
+ * @param options Options to search for specific PaymentInformation per network and / or environment.
+ *
+ * @returns The payment information tied to the PayString or undefined when none is found.
+ */
+export async function getPayStringAsync(
+  prefix: string,
+  domain: string,
+  options?: Options,
+): Promise<PaymentInformation | undefined> {
+  if (domain.includes('://')) {
+    domain = domain.split('://')[1];
+  }
+
+  const payString = `${prefix}$${domain}`;
   try {
+    if (!isValidPrefix(payString)) return;
+
     const _parsed = parsePayString(payString);
     if (!_parsed) return;
 
@@ -49,9 +68,20 @@ export async function getPayStringAsync(payString: string, options?: Options) {
 let pastSearchQuery: string | undefined;
 let debounceSearchFunction: ((() => void) & { clear(): void }) | null = null;
 
+/**
+ * Find a PayString and return the payment information with a debounce and callback.
+ * @param callback Returns the PaymentInformation when the query is done, or undefined when none is found.
+ * @param prefix The part before the "$" for the PayString.
+ * @param domain The domain to use for fetching the PayString.
+ * @param options Options to search for specific PaymentInformation per network and / or environment.
+ * @param debounceTime Time it takes between the last keypress and the actual query call.
+ *
+ * @returns void, returns data through callback.
+ */
 export function getPayStringDebounce(
   callback: (data: PaymentInformation | undefined) => void,
-  payString: string,
+  prefix: string,
+  domain: string,
   options?: Options,
   debounceTime = minDebounceTime,
 ) {
@@ -63,13 +93,13 @@ export function getPayStringDebounce(
     debounceSearchFunction.clear();
   }
 
-  if (pastSearchQuery !== payString) {
+  if (pastSearchQuery !== prefix) {
     debounceSearchFunction = debounce(() => {
-      getPayStringAsync(payString, options).then(callback);
+      getPayStringAsync(prefix, domain, options).then(callback);
       debounceSearchFunction = null;
     }, debounceTime);
 
-    pastSearchQuery = payString;
+    pastSearchQuery = prefix;
     debounceSearchFunction();
   }
 }

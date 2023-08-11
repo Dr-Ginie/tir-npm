@@ -1,4 +1,4 @@
-# The identity registry
+# The Registry
 
 ###### Empowering Seamless Cross-Platform Payments with PayStrings
 
@@ -6,7 +6,7 @@ In the vast expanse of the decentralized galaxy, where the powers of technology 
 
 **Learn more here:**
 Socials: https://b.ink/the_registery_
-Website: https://identityregistry.io
+Website: https://theregistry.app
 
 ### Methods
 

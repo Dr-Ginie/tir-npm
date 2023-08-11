@@ -4,8 +4,10 @@ export function parsePayString(payString: string): string | undefined {
   const _split = splitPayString(payString);
 
   if (!_split) return;
-
   const { prefix: user, domain: host } = _split;
+
+  const urlSafePattern = /^[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=]*$/;
+  if (!urlSafePattern.test(user)) return;
 
   // A PayString string representation cannot include paths
   if (user.includes('/') || host.includes('/')) return;

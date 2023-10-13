@@ -19,7 +19,7 @@ const minDebounceTime = 300;
  * @param domain The domain to use for fetching the PayString.
  * @param options Options to search for specific PaymentInformation per network and / or environment.
  *
- * @returns The payment information tied to the PayString or undefined when none is found.
+ * @returns `PaymentInformation` or `undefined` when none is found.
  */
 export async function getPayStringAsync(
   prefix: string,
@@ -45,6 +45,7 @@ export async function getPayStringAsync(
 
     let headers: RawAxiosRequestHeaders = {
       'content-type': 'application/json',
+      'Access-Control-Allow-Origin': '*', // added this
       Accept: `application/${acceptChain}${acceptEnvironment}+json`,
     };
 
@@ -76,7 +77,7 @@ let debounceSearchFunction: ((() => void) & { clear(): void }) | null = null;
  * @param options Options to search for specific PaymentInformation per network and / or environment.
  * @param debounceTime Time it takes between the last keypress and the actual query call.
  *
- * @returns void, returns data through callback.
+ * @returns `void`.
  */
 export function getPayStringDebounce(
   callback: (data: PaymentInformation | undefined) => void,

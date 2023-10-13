@@ -1,6 +1,6 @@
 {
-  "name": "@the-registry/tir",
-  "version": "1.0.20",
+  "name": "@the-registry/paystring",
+  "version": "1.0.0",
   "description": "PayString integration on the internet computer",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

@@ -101,7 +101,7 @@ function convertPayStringToUrl(payString: string): URL | undefined;
  * @param payStringUrl the url of a paystring "https://domain/prefix"
  * @returns paystring as `string` or `undefined` if not parsable.
  */
-convertUrlToPayString(payStringUrl: string): string | undefined
+function convertUrlToPayString(payStringUrl: string): string | undefined;
 ```
 
 ```ts

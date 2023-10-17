@@ -1,4 +1,4 @@
-import { payStringCanisterUrl } from '..';
+import { payStringCanisterUrl, payStringDomain } from '..';
 
 /**
  * Splits a PayString into its prefix and domain.
@@ -42,6 +42,8 @@ export async function isVerifiedDomain(domain: string): Promise<boolean> {
   const url = `${payStringCanisterUrl}/.well-known/ic-domains`;
   const response = await fetch(url);
   const data = await response.text();
-  let trustedDomains = data.split('\n');
-  return trustedDomains.includes(domain);
+
+  let verifiedDomains = data.split('\n');
+
+  return [...verifiedDomains, payStringDomain].includes(domain);
 }

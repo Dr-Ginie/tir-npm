@@ -43,7 +43,7 @@ export async function isVerifiedDomain(domain: string): Promise<boolean> {
   const response = await fetch(url);
   const data = await response.text();
 
-  let verifiedDomains = data.split('\n');
+  const verifiedDomains = data.split('\n');
 
   return [...verifiedDomains, payStringDomain].includes(domain);
 }

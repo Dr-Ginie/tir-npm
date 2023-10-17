@@ -33,15 +33,15 @@ export function isValidPrefix(prefix: string): boolean {
 }
 
 /**
- * NOT IMPLEMENTED
  * Check if a domain is trusted by the PayString Canister
  * @param domain the domain to check
  *
  * @returns `true` if trusted, `false` otherwise.
  */
-export async function isTrustedDomain(domain: string): Promise<boolean> {
-  // const url = `${payStringCanisterUrl}/.well-known/ic-domains`;
-  // const response = await fetch(url);
-  // const data = await response.text();
-  return false;
+export async function isVerifiedDomain(domain: string): Promise<boolean> {
+  const url = `${payStringCanisterUrl}/.well-known/ic-domains`;
+  const response = await fetch(url);
+  const data = await response.text();
+  let trustedDomains = data.split('\n');
+  return trustedDomains.includes(domain);
 }

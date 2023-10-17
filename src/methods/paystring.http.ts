@@ -3,12 +3,13 @@ import { convertPayStringToUrl } from './paystring.convert';
 import { PaymentInformation } from './paystring.interfaces';
 import debounce from 'debounce';
 import { parsePayString } from './paystring.parse';
-import { isValidPrefix } from './paystring.misc';
+import { isValidPrefix, isVerifiedDomain } from './paystring.misc';
 
 export interface Options {
   chain?: string;
   environment?: string;
   version?: string;
+  verifiedDomainOnly?: boolean;
 }
 
 const minDebounceTime = 300;
@@ -28,6 +29,12 @@ export async function getPayStringAsync(
 ): Promise<PaymentInformation | undefined> {
   if (domain.includes('://')) {
     domain = domain.split('://')[1];
+  }
+
+  if (options?.verifiedDomainOnly === undefined || options?.verifiedDomainOnly === true) {
+    const isVerified = await isVerifiedDomain(domain);
+    console.log('undefined or true');
+    if (!isVerified) return;
   }
 
   const payString = `${prefix}$${domain}`;

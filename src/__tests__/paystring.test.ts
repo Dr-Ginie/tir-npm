@@ -1,9 +1,9 @@
 import { getPayStringAsync, getPayStringDebounce } from '../methods/paystring.http';
-import { isTrustedDomain } from '../methods/paystring.misc';
+import { isVerifiedDomain } from '../methods/paystring.misc';
 
 test('isTrustedDomain', async () => {
-  // const x = await isTrustedDomain('');
-  // console.log(x);
+  //   //   const response = await isTrustedDomain('upayed.me');
+  //   //   console.log(response);
   expect(1).toBe(1);
 });
 

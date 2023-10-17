@@ -159,9 +159,11 @@ interface Address {
 // - chain: ex; icp
 // - network: ex; mainnet
 // - version: ex; 1.0 (paystring version)
+// - verifiedDomainOnly: Only use verified domains default: `true`
 interface Options {
   chain?: string;
   environment?: string;
   version?: string;
+  verifiedDomainOnly?: boolean;
 }
 ```

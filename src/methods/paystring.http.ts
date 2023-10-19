@@ -51,14 +51,13 @@ export async function getPayStringAsync(
 
     let headers: RawAxiosRequestHeaders = {
       'content-type': 'application/json',
-      'Access-Control-Allow-Origin': '*', // added this
       Accept: `application/${acceptChain}${acceptEnvironment}+json`,
     };
 
-    if (options?.version) {
+    if (!!options?.version) {
       headers = {
-        ...headers,
         'PayID-Version': options.version,
+        ...headers,
       };
     }
 

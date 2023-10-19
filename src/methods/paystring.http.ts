@@ -33,7 +33,6 @@ export async function getPayStringAsync(
 
   if (options?.verifiedDomainOnly === undefined || options?.verifiedDomainOnly === true) {
     const isVerified = await isVerifiedDomain(domain);
-    console.log('undefined or true');
     if (!isVerified) return;
   }
 
@@ -53,6 +52,10 @@ export async function getPayStringAsync(
     let headers: RawAxiosRequestHeaders = {
       'content-type': 'application/json',
       'Access-Control-Allow-Origin': '*', // added this
+      'Access-Control-Request-Headers': '*', // added this
+      'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT', // added this
+      'Access-Control-Allow-Headers':
+        'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers', // added this
       Accept: `application/${acceptChain}${acceptEnvironment}+json`,
     };
 

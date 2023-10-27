@@ -125,7 +125,7 @@ export async function searchPayString(query: string, domain: string, options?: O
 
   if (options?.verifiedDomainOnly === undefined || options?.verifiedDomainOnly === true) {
     const isVerified = await isVerifiedDomain(domain);
-    if (!isVerified) [];
+    if (!isVerified) return [];
   }
 
   try {

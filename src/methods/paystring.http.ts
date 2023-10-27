@@ -71,8 +71,8 @@ export async function getPayStringAsync(
   }
 }
 
-let pastSearchQuery: string | undefined;
-let debounceSearchFunction: ((() => void) & { clear(): void }) | null = null;
+let pastSearchPrefix: string | undefined;
+let debouncePrefixFunction: ((() => void) & { clear(): void }) | null = null;
 
 /**
  * Find a PayString and return the payment information with a debounce and callback.
@@ -95,17 +95,100 @@ export function getPayStringDebounce(
     debounceTime = minDebounceTime;
   }
 
+  if (debouncePrefixFunction) {
+    debouncePrefixFunction.clear();
+  }
+
+  if (pastSearchPrefix !== prefix) {
+    debouncePrefixFunction = debounce(() => {
+      getPayStringAsync(prefix, domain, options).then(callback);
+      debouncePrefixFunction = null;
+    }, debounceTime);
+
+    pastSearchPrefix = prefix;
+    debouncePrefixFunction();
+  }
+}
+
+/**
+ * Search for a paystring based on a query and return the payment information.
+ * @param query The search query the paystring should match
+ * @param domain The domain to use for searching the PayString.
+ * @param options Options to search for specific PaymentInformation per network and / or environment.
+ *
+ * @returns `PaymentInformation[]` or `[]` when none is found.
+ */
+export async function searchPayString(query: string, domain: string, options?: Options): Promise<PaymentInformation[]> {
+  if (domain.includes('://')) {
+    domain = domain.split('://')[1];
+  }
+
+  if (options?.verifiedDomainOnly === undefined || options?.verifiedDomainOnly === true) {
+    const isVerified = await isVerifiedDomain(domain);
+    if (!isVerified) [];
+  }
+
+  try {
+    const acceptChain = options?.chain ? options.chain : 'payid';
+    const acceptEnvironment = options?.environment ? `-${options.environment}` : '';
+
+    let headers: RawAxiosRequestHeaders = {
+      'content-type': 'application/json',
+      Accept: `application/${acceptChain}${acceptEnvironment}+json`,
+    };
+
+    if (!!options?.version) {
+      headers = {
+        'PayID-Version': options.version,
+        ...headers,
+      };
+    }
+
+    const result = await axios.get<PaymentInformation[]>(`https://${domain}/?search=${query}`, {
+      headers,
+    });
+
+    return result.data;
+  } catch (error) {
+    return [];
+  }
+}
+
+let pastSearchSearch: string | undefined;
+let debounceSearchFunction: ((() => void) & { clear(): void }) | null = null;
+
+/**
+ * Search for a PayString and return the payment information with a debounce and callback.
+ * @param callback Returns the PaymentInformation when the query is done, or undefined when none is found.
+ * @param query The search query the paystring should match
+ * @param domain The domain to use for fetching the PayString.
+ * @param options Options to search for specific PaymentInformation per network and / or environment.
+ * @param debounceTime Time it takes between the last keypress and the actual query call.
+ *
+ * @returns `void`.
+ */
+export function searchPayStringDebounce(
+  callback: (data: PaymentInformation[]) => void,
+  query: string,
+  domain: string,
+  options?: Options,
+  debounceTime = minDebounceTime,
+) {
+  if (debounceTime < minDebounceTime) {
+    debounceTime = minDebounceTime;
+  }
+
   if (debounceSearchFunction) {
     debounceSearchFunction.clear();
   }
 
-  if (pastSearchQuery !== prefix) {
+  if (pastSearchSearch !== query) {
     debounceSearchFunction = debounce(() => {
-      getPayStringAsync(prefix, domain, options).then(callback);
+      searchPayString(query, domain, options).then(callback);
       debounceSearchFunction = null;
     }, debounceTime);
 
-    pastSearchQuery = prefix;
+    pastSearchSearch = query;
     debounceSearchFunction();
   }
 }

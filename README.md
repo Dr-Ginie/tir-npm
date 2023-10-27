@@ -36,12 +36,44 @@ async function getPayStringAsync(
  *
  * @returns `void`.
  */
-function function getPayStringDebounce(
+function getPayStringDebounce(
   callback: (data: PaymentInformation | undefined) => void,
   prefix: string,
   domain: string,
   options?: Options,
   debounceTime?: number, // defaults to the minumum of 300ms
+): void;
+```
+
+```ts
+/**
+ * Search for a paystring based on a query and return the payment information.
+ * @param query The search query the paystring should match
+ * @param domain The domain to use for searching the PayString.
+ * @param options Options to search for specific PaymentInformation per network and / or environment.
+ *
+ * @returns `PaymentInformation[]` or `[]` when none is found.
+ */
+async function searchPayString(query: string, domain: string, options?: Options): Promise<PaymentInformation[]>;
+```
+
+```ts
+/**
+ * Search for a PayString and return the payment information with a debounce and callback.
+ * @param callback Returns the PaymentInformation when the query is done, or undefined when none is found.
+ * @param query The search query the paystring should match
+ * @param domain The domain to use for fetching the PayString.
+ * @param options Options to search for specific PaymentInformation per network and / or environment.
+ * @param debounceTime Time it takes between the last keypress and the actual query call.
+ *
+ * @returns `void`.
+ */
+function searchPayStringDebounce(
+  callback: (data: PaymentInformation[]) => void,
+  query: string,
+  domain: string,
+  options?: Options,
+  debounceTime = minDebounceTime,
 ): void;
 ```
 
@@ -106,7 +138,6 @@ function convertUrlToPayString(payStringUrl: string): string | undefined;
 
 ```ts
 /**
- * NOT IMPLEMENTED
  * Check if a domain is trusted by the PayString Canister
  * @param domain the domain to check
  *

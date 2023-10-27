@@ -1,4 +1,9 @@
-import { getPayStringAsync, getPayStringDebounce } from '../methods/paystring.http';
+import {
+  getPayStringAsync,
+  getPayStringDebounce,
+  searchPayString,
+  searchPayStringDebounce,
+} from '../methods/paystring.http';
 import { isVerifiedDomain } from '../methods/paystring.misc';
 
 test('isTrustedDomain', async () => {
@@ -6,6 +11,11 @@ test('isTrustedDomain', async () => {
   //   //   console.log(response);
   expect(1).toBe(1);
 });
+
+// test('searchPayString', async () => {
+//   searchPayStringDebounce(console.log, 're', 'spaceturtle.app');
+//   expect(1).toBe(1);
+// });
 
 // test('getPayStringAsyncFull', async () => {
 //   const x = await getPayStringAsync('rem.codes', 'spaceturtle.app');
